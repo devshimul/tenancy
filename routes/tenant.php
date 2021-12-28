@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -31,4 +32,11 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 Route::get('/', function () {
     dd(\App\Models\User::all());
     return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+});
+Route::get('/createdb', function(){
+   
+    $userName = 'testdb_'.rand(100,999);  // Your Database name to be created
+    DB::statement("CREATE DATABASE $userName");
+    return 'hello';
+
 });
